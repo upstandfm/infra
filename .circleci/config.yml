@@ -65,7 +65,8 @@ jobs:
       - *restore_deps_cache
       - run:
           name: Lint Serverless manifest
-          command: npm run sls:debug
+          command: |
+            $(npm bin)/serverless print
 
   release:
     <<: *docker_image
