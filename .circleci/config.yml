@@ -90,6 +90,8 @@ workflows:
       - deps:
           <<: *all_branches_except_master
       - lint:
+          # Contains Serverless Framework credentials
+          context: credentials
           <<: *all_branches_except_master
           requires:
             - deps
@@ -99,6 +101,8 @@ workflows:
       - deps:
           <<: *only_master
       - lint:
+          # Contains Serverless Framework credentials
+          context: credentials
           <<: *only_master
           requires:
             - deps
