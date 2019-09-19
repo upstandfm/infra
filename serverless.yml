@@ -1,0 +1,59 @@
+service: infra
+app: infra
+org: upstandfm
+
+provider:
+  name: aws
+  stage: ${opt:stage, 'prod'}
+  region: ${opt:region, 'eu-central-1'}
+  cfnRole: ${secrets:CFN_ROLE_ARN}
+  deploymentBucket:
+    name: upstandfm-deployments
+    serverSideEncryption: AES256 # when using server-side encryption
+
+package:
+  exclude:
+    - ./*
+
+resources:
+  # CloudFormation template syntax
+  Resources:
+    # For more info see:
+    # https://docs.aws.amazon.com/en_pv/AWSCloudFormation/latest/UserGuide/aws-resource-dynamodb-table.html
+    standupsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: standups
+        AttributeDefinitions:
+          - AttributeName: pk
+            AttributeType: S
+          - AttributeName: sk
+            AttributeType: S
+        KeySchema:
+          - AttributeName: pk
+            KeyType: HASH
+          - AttributeName: sk
+            KeyType: RANGE
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        GlobalSecondaryIndexes:
+          - IndexName: inverted-index
+            KeySchema:
+              - AttributeName: sk
+                KeyType: HASH
+              - AttributeName: pk
+                KeyType: RANGE
+            Projection:
+              ProjectionType: INCLUDE
+              NonKeyAttributes:
+                - name
+            ProvisionedThroughput:
+              ReadCapacityUnits: 1
+              WriteCapacityUnits: 1
+# Serverless output variables
+# For more info see:
+# https://serverless.com/framework/docs/dashboard/output-variables/
+outputs:
+  standupsTableArn:
+    'Fn::GetAtt': [standupsTable, Arn]

@@ -1,0 +1,23 @@
+{
+  "name": "infra",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Infrastructure resources.",
+  "scripts": {
+    "sls:debug": "serverless print"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/upstandfm/infra.git"
+  },
+  "author": "Daniël Illouz <daniel.illouz@me.com> (https://www.danillouz.dev/)",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/upstandfm/infra/issues"
+  },
+  "homepage": "https://github.com/upstandfm/infra#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "serverless": "^1.52.0"
+  }
+}
