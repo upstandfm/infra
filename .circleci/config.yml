@@ -69,7 +69,7 @@ jobs:
       - run:
           name: Lint Serverless manifest
           command: |
-            $(npm bin)/serverless print
+            $(npm bin)/serverless print > /dev/null
 
   release:
     <<: *docker_image
