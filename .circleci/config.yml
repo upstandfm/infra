@@ -64,6 +64,9 @@ jobs:
       - checkout
       - *restore_deps_cache
       - run:
+          name: Install dependencies
+          command: npm ci
+      - run:
           name: Lint Serverless manifest
           command: |
             $(npm bin)/serverless print
