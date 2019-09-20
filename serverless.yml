@@ -1,6 +1,6 @@
-service: infra
-app: infra
 org: upstandfm
+app: api
+service: infra
 
 provider:
   name: aws
