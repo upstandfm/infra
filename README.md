@@ -60,8 +60,9 @@ We also use a separate CloudFormation role to limit access during deployment, to
 
 The following [output variables](https://serverless.com/framework/docs/dashboard/output-variables/) are available in any service that uses the app `api`:
 
-| Variable name      | Description                             | Usage                             |
-| ------------------ | --------------------------------------- | --------------------------------- |
-| `standupsTableArn` | The ARN of the standups DynamoDB Table. | `${state:infra.standupsTableArn}` |
+| Variable name           | Description                                                      | Usage                                  |
+| ----------------------- | ---------------------------------------------------------------- | -------------------------------------- |
+| `standupsTableArn`      | The ARN of the standups DynamoDB Table.                          | `${state:infra.standupsTableArn}`      |
+| `standupsInvertedIndex` | The name of the "inverted index" of the standups DynamoDB Table. | `${state:infra.standupsInvertedIndex}` |
 
 All output variables can be viewed in the [Serverless Dashboard](https://dashboard.serverless.com/tenants/upstandfm/applications/api/services/infra/stage/prod/region/eu-central-1#service-overview=overview) under "Variables".

@@ -15,6 +15,9 @@ package:
   exclude:
     - ./*
 
+custom:
+  standupsInvertedIndex: 'inverted-index'
+
 resources:
   # CloudFormation template syntax
   Resources:
@@ -38,7 +41,7 @@ resources:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
         GlobalSecondaryIndexes:
-          - IndexName: inverted-index
+          - IndexName: ${self:custom.standupsInvertedIndex}
             KeySchema:
               - AttributeName: sk
                 KeyType: HASH
@@ -57,3 +60,4 @@ resources:
 outputs:
   standupsTableArn:
     'Fn::GetAtt': [standupsTable, Arn]
+  standupsInvertedIndex: ${self:custom.standupsInvertedIndex}
