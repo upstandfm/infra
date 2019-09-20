@@ -50,7 +50,8 @@ resources:
             Projection:
               ProjectionType: INCLUDE
               NonKeyAttributes:
-                - name
+                - standupId
+                - standupName
             ProvisionedThroughput:
               ReadCapacityUnits: 1
               WriteCapacityUnits: 1
