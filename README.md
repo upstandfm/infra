@@ -64,4 +64,4 @@ The following [output variables](https://serverless.com/framework/docs/dashboard
 | ------------------ | --------------------------------------- | --------------------------------- |
 | `standupsTableArn` | The ARN of the standups DynamoDB Table. | `${state:infra.standupsTableArn}` |
 
-All output variables can be viewed in the [Serverless Dashboard](https://dashboard.serverless.com/tenants/upstandfm/applications/api/services/api/stage/prod/region/eu-central-1/variables/output).
+All output variables can be viewed in the [Serverless Dashboard](https://dashboard.serverless.com/tenants/upstandfm/applications/api/services/infra/stage/prod/region/eu-central-1#service-overview=overview) under "Variables".
