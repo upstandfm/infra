@@ -16,7 +16,7 @@ package:
     - ./*
 
 custom:
-  standupsInvertedIndex: 'inverted-index'
+  standupsInvertedIndex: 'standups-inverted-index'
 
 resources:
   # CloudFormation template syntax
