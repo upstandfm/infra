@@ -56,21 +56,21 @@ resources:
               ReadCapacityUnits: 1
               WriteCapacityUnits: 1
 
-      mediaBucket:
-        # For more info see:
-        # https://docs.aws.amazon.com/en_pv/AWSCloudFormation/latest/UserGuide/aws-properties-s3-bucket.html
-        Type: AWS::S3::Bucket
-        Properties:
-          BucketName: media.upstand.fm
-          BucketEncryption:
-            ServerSideEncryptionConfiguration:
-              - ServerSideEncryptionByDefault:
-                  SSEAlgorithm: AES256
-          PublicAccessBlockConfiguration:
-            BlockPublicAcls: true
-            BlockPublicPolicy: true
-            IgnorePublicAcls: true
-            RestrictPublicBuckets: true
+    mediaBucket:
+      # For more info see:
+      # https://docs.aws.amazon.com/en_pv/AWSCloudFormation/latest/UserGuide/aws-properties-s3-bucket.html
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: media.upstand.fm
+        BucketEncryption:
+          ServerSideEncryptionConfiguration:
+            - ServerSideEncryptionByDefault:
+                SSEAlgorithm: AES256
+        PublicAccessBlockConfiguration:
+          BlockPublicAcls: true
+          BlockPublicPolicy: true
+          IgnorePublicAcls: true
+          RestrictPublicBuckets: true
 
 # Serverless output variables
 # For more info see:
