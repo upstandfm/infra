@@ -65,7 +65,7 @@ resources:
           BucketEncryption:
             ServerSideEncryptionConfiguration:
               - ServerSideEncryptionByDefault:
-                SSEAlgorithm: AES256
+                  SSEAlgorithm: AES256
           PublicAccessBlockConfiguration:
             BlockPublicAcls: true
             BlockPublicPolicy: true
