@@ -64,5 +64,6 @@ The following [output variables](https://serverless.com/framework/docs/dashboard
 | ----------------------- | ---------------------------------------------------------------- | -------------------------------------- |
 | `standupsTableArn`      | The ARN of the standups DynamoDB Table.                          | `${state:infra.standupsTableArn}`      |
 | `standupsInvertedIndex` | The name of the "inverted index" of the standups DynamoDB Table. | `${state:infra.standupsInvertedIndex}` |
+| `mediaBucketArn`        | The ARN of the media S3 Bucket.                                  | `${state:infra.mediaBucketArn}`        |
 
 All output variables can be viewed in the [Serverless Dashboard](https://dashboard.serverless.com/tenants/upstandfm/applications/api/services/infra/stage/prod/region/eu-central-1#service-overview=overview) under "Variables".

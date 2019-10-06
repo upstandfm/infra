@@ -21,9 +21,9 @@ custom:
 resources:
   # CloudFormation template syntax
   Resources:
-    # For more info see:
-    # https://docs.aws.amazon.com/en_pv/AWSCloudFormation/latest/UserGuide/aws-resource-dynamodb-table.html
     standupsTable:
+      # For more info see:
+      # https://docs.aws.amazon.com/en_pv/AWSCloudFormation/latest/UserGuide/aws-resource-dynamodb-table.html
       Type: AWS::DynamoDB::Table
       Properties:
         TableName: standups
@@ -55,6 +55,23 @@ resources:
             ProvisionedThroughput:
               ReadCapacityUnits: 1
               WriteCapacityUnits: 1
+
+      mediaBucket:
+        # For more info see:
+        # https://docs.aws.amazon.com/en_pv/AWSCloudFormation/latest/UserGuide/aws-properties-s3-bucket.html
+        Type: AWS::S3::Bucket
+        Properties:
+          BucketName: media.upstand.fm
+          BucketEncryption:
+            ServerSideEncryptionConfiguration:
+              - ServerSideEncryptionByDefault:
+                SSEAlgorithm: AES256
+          PublicAccessBlockConfiguration:
+            BlockPublicAcls: true
+            BlockPublicPolicy: true
+            IgnorePublicAcls: true
+            RestrictPublicBuckets: true
+
 # Serverless output variables
 # For more info see:
 # https://serverless.com/framework/docs/dashboard/output-variables/
@@ -62,3 +79,5 @@ outputs:
   standupsTableArn:
     'Fn::GetAtt': [standupsTable, Arn]
   standupsInvertedIndex: ${self:custom.standupsInvertedIndex}
+  mediaBucketArn:
+    'Fn::GetAtt': [mediaBucket, Arn]
