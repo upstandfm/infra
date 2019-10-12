@@ -115,7 +115,6 @@ resources:
             - AllowedHeaders:
                 - '*'
               AllowedMethods:
-                - GET
                 - HEAD
                 - PUT
               AllowedOrigins:
@@ -153,7 +152,6 @@ resources:
               AllowedMethods:
                 - GET
                 - HEAD
-                - PUT
               AllowedOrigins:
                 - '*'
         NotificationConfiguration:
@@ -173,8 +171,6 @@ outputs:
   standupsTableArn:
     'Fn::GetAtt': [standupsTable, Arn]
   standupsInvertedIndex: ${self:custom.standupsInvertedIndex}
-  mediaBucketArn:
-    'Fn::GetAtt': [mediaBucket, Arn]
   recordingsBucketArn:
     'Fn::GetAtt': [recordingsBucket, Arn]
   transcodedRecordingsBucketArn:
