@@ -60,10 +60,14 @@ We also use a separate CloudFormation role to limit access during deployment, to
 
 The following [output variables](https://serverless.com/framework/docs/dashboard/output-variables/) are available in any service that uses the app `api`:
 
-| Variable name           | Description                                                      | Usage                                  |
-| ----------------------- | ---------------------------------------------------------------- | -------------------------------------- |
-| `standupsTableArn`      | The ARN of the standups DynamoDB Table.                          | `${state:infra.standupsTableArn}`      |
-| `standupsInvertedIndex` | The name of the "inverted index" of the standups DynamoDB Table. | `${state:infra.standupsInvertedIndex}` |
-| `mediaBucketArn`        | The ARN of the media S3 Bucket.                                  | `${state:infra.mediaBucketArn}`        |
+| Variable name                           | Description                                                                                                      | Usage                                                  |
+| --------------------------------------- | ---------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------ |
+| `standupsTableArn`                      | The ARN of the standups DynamoDB Table.                                                                          | `${state:infra.standupsTableArn}`                      |
+| `standupsInvertedIndex`                 | The name of the "inverted index" of the standups DynamoDB Table.                                                 | `${state:infra.standupsInvertedIndex}`                 |
+| `mediaBucketArn`                        | The ARN of the media S3 Bucket.                                                                                  | `${state:infra.mediaBucketArn}`                        |
+| `recordingsBucketArn`                   | The ARN of the recordings S3 Bucket.                                                                             | `${state:infra.recordingsBucketArn}`                   |
+| `transcodedRecordingsBucketArn`         | The ARN of the transcoded recordings S3 Bucket.                                                                  | `${state:infra.transcodedRecordingsBucketArn}`         |
+| `newS3AudioRecordingTopicArn`           | The ARN of the SNS Topic that S3 sends a notification to when a new audio recording has been created.            | `${state:infra.newS3AudioRecordingTopicArn}`           |
+| `newS3TranscodedAudioRecordingTopicArn` | The ARN of the SNS Topic that S3 sends a notification to when a new transcoded audio recording has been created. | `${state:infra.newS3TranscodedAudioRecordingTopicArn}` |
 
 All output variables can be viewed in the [Serverless Dashboard](https://dashboard.serverless.com/tenants/upstandfm/applications/api/services/infra/stage/prod/region/eu-central-1#service-overview=overview) under "Variables".

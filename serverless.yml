@@ -82,6 +82,116 @@ resources:
               AllowedOrigins:
                 - '*'
 
+    newS3AudioRecordingTopic:
+      # For more info see:
+      # https://docs.aws.amazon.com/en_pv/AWSCloudFormation/latest/UserGuide/aws-properties-sns-topic.html
+      Type: AWS::SNS::Topic
+      Properties:
+        TopicName: new-s3-audio-recording
+
+    newS3TranscodedAudioRecordingTopic:
+      # For more info see:
+      # https://docs.aws.amazon.com/en_pv/AWSCloudFormation/latest/UserGuide/aws-properties-sns-topic.html
+      Type: AWS::SNS::Topic
+      Properties:
+        TopicName: new-s3-transcoded-audio-recording
+
+    s3PublishTopicPolicy:
+      # For more info see:
+      # https://docs.aws.amazon.com/en_pv/AWSCloudFormation/latest/UserGuide/aws-properties-sns-policy.html
+      Type: AWS::SNS::TopicPolicy
+      Properties:
+        Topics:
+          - !Ref newS3AudioRecordingTopic
+          - !Ref newS3TranscodedAudioRecordingTopic
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Sid: 's3-publish-to-sns-new-audio-recording-topic'
+              Effect: Allow
+              Action: sns:Publish
+              Resource: !Ref newS3AudioRecordingTopic
+              Principal:
+                Service: s3.amazonaws.com
+            - Sid: 's3-publish-to-sns-new-transcoded-audio-recording-topic'
+              Effect: Allow
+              Action: sns:Publish
+              Resource: !Ref newS3TranscodedAudioRecordingTopic
+              Principal:
+                Service: s3.amazonaws.com
+
+    recordingsBucket:
+      # For more info see:
+      # https://docs.aws.amazon.com/en_pv/AWSCloudFormation/latest/UserGuide/aws-properties-s3-bucket.html
+      Type: AWS::S3::Bucket
+      DependsOn: s3PublishTopicPolicy
+      Properties:
+        BucketName: upstandfm-recordings
+        BucketEncryption:
+          ServerSideEncryptionConfiguration:
+            - ServerSideEncryptionByDefault:
+                SSEAlgorithm: AES256
+        PublicAccessBlockConfiguration:
+          BlockPublicAcls: true
+          BlockPublicPolicy: true
+          IgnorePublicAcls: true
+          RestrictPublicBuckets: true
+        CorsConfiguration:
+          CorsRules:
+            - AllowedHeaders:
+                - '*'
+              AllowedMethods:
+                - GET
+                - HEAD
+                - PUT
+              AllowedOrigins:
+                - '*'
+        NotificationConfiguration:
+          TopicConfigurations:
+            - Event: s3:ObjectCreated:*
+              Filter:
+                S3Key:
+                  Rules:
+                    - Name: prefix
+                      Value: audio/
+              Topic: !Ref newS3AudioRecordingTopic
+
+    transcodedRecordingsBucket:
+      # For more info see:
+      # https://docs.aws.amazon.com/en_pv/AWSCloudFormation/latest/UserGuide/aws-properties-s3-bucket.html
+      Type: AWS::S3::Bucket
+      DependsOn: s3PublishTopicPolicy
+      Properties:
+        BucketName: upstandfm-transcoded-recordings
+        BucketEncryption:
+          ServerSideEncryptionConfiguration:
+            - ServerSideEncryptionByDefault:
+                SSEAlgorithm: AES256
+        PublicAccessBlockConfiguration:
+          BlockPublicAcls: true
+          BlockPublicPolicy: true
+          IgnorePublicAcls: true
+          RestrictPublicBuckets: true
+        CorsConfiguration:
+          CorsRules:
+            - AllowedHeaders:
+                - '*'
+              AllowedMethods:
+                - GET
+                - HEAD
+                - PUT
+              AllowedOrigins:
+                - '*'
+        NotificationConfiguration:
+          TopicConfigurations:
+            - Event: s3:ObjectCreated:*
+              Filter:
+                S3Key:
+                  Rules:
+                    - Name: prefix
+                      Value: audio/
+              Topic: !Ref newS3TranscodedAudioRecordingTopic
+
 # Serverless output variables
 # For more info see:
 # https://serverless.com/framework/docs/dashboard/output-variables/
@@ -91,3 +201,10 @@ outputs:
   standupsInvertedIndex: ${self:custom.standupsInvertedIndex}
   mediaBucketArn:
     'Fn::GetAtt': [mediaBucket, Arn]
+  recordingsBucketArn:
+    'Fn::GetAtt': [recordingsBucket, Arn]
+  transcodedRecordingsBucketArn:
+    'Fn::GetAtt': [transcodedRecordingsBucket, Arn]
+  # For a Topic "!Ref" will return the ARN
+  newS3AudioRecordingTopicArn: !Ref newS3AudioRecordingTopic
+  newS3TranscodedAudioRecordingTopicArn: !Ref newS3TranscodedAudioRecordingTopic
