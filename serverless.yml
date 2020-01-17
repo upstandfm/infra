@@ -16,7 +16,7 @@ package:
     - ./*
 
 custom:
-  standupsInvertedIndex: 'standups-inverted-index'
+  standupsInvertedIndex: "standups-inverted-index"
 
 resources:
   # CloudFormation template syntax
@@ -55,6 +55,25 @@ resources:
             ProvisionedThroughput:
               ReadCapacityUnits: 1
               WriteCapacityUnits: 1
+    workspacesTable:
+      # For more info see:
+      # https://docs.aws.amazon.com/en_pv/AWSCloudFormation/latest/UserGuide/aws-resource-dynamodb-table.html
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: Workspaces
+        AttributeDefinitions:
+          - AttributeName: pk
+            AttributeType: S
+          - AttributeName: sk
+            AttributeType: S
+        KeySchema:
+          - AttributeName: pk
+            KeyType: HASH
+          - AttributeName: sk
+            KeyType: RANGE
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
 
     newS3AudioRecordingTopic:
       # For more info see:
@@ -79,15 +98,15 @@ resources:
           - !Ref newS3AudioRecordingTopic
           - !Ref newS3TranscodedAudioRecordingTopic
         PolicyDocument:
-          Version: '2012-10-17'
+          Version: "2012-10-17"
           Statement:
-            - Sid: 's3-publish-to-sns-new-audio-recording-topic'
+            - Sid: "s3-publish-to-sns-new-audio-recording-topic"
               Effect: Allow
               Action: sns:Publish
               Resource: !Ref newS3AudioRecordingTopic
               Principal:
                 Service: s3.amazonaws.com
-            - Sid: 's3-publish-to-sns-new-transcoded-audio-recording-topic'
+            - Sid: "s3-publish-to-sns-new-transcoded-audio-recording-topic"
               Effect: Allow
               Action: sns:Publish
               Resource: !Ref newS3TranscodedAudioRecordingTopic
@@ -113,12 +132,12 @@ resources:
         CorsConfiguration:
           CorsRules:
             - AllowedHeaders:
-                - '*'
+                - "*"
               AllowedMethods:
                 - HEAD
                 - PUT
               AllowedOrigins:
-                - '*'
+                - "*"
         NotificationConfiguration:
           TopicConfigurations:
             - Event: s3:ObjectCreated:*
@@ -148,12 +167,12 @@ resources:
         CorsConfiguration:
           CorsRules:
             - AllowedHeaders:
-                - '*'
+                - "*"
               AllowedMethods:
                 - GET
                 - HEAD
               AllowedOrigins:
-                - '*'
+                - "*"
         NotificationConfiguration:
           TopicConfigurations:
             - Event: s3:ObjectCreated:*
@@ -169,12 +188,14 @@ resources:
 # https://serverless.com/framework/docs/dashboard/output-variables/
 outputs:
   standupsTableArn:
-    'Fn::GetAtt': [standupsTable, Arn]
+    "Fn::GetAtt": [standupsTable, Arn]
   standupsInvertedIndex: ${self:custom.standupsInvertedIndex}
+  workspacesTableArn:
+    "Fn::GetAtt": [workspacesTable, Arn]
   recordingsBucketArn:
-    'Fn::GetAtt': [recordingsBucket, Arn]
+    "Fn::GetAtt": [recordingsBucket, Arn]
   transcodedRecordingsBucketArn:
-    'Fn::GetAtt': [transcodedRecordingsBucket, Arn]
+    "Fn::GetAtt": [transcodedRecordingsBucket, Arn]
   # For a Topic "!Ref" will return the ARN
   newS3AudioRecordingTopicArn: !Ref newS3AudioRecordingTopic
   newS3TranscodedAudioRecordingTopicArn: !Ref newS3TranscodedAudioRecordingTopic

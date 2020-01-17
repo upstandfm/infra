@@ -62,8 +62,9 @@ The following [output variables](https://serverless.com/framework/docs/dashboard
 
 | Variable name                           | Description                                                                                                      |
 | --------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
-| `standupsTableArn`                      | The ARN of the standups DynamoDB Table.                                                                          |
+| `standupsTableArn`                      | The ARN of the "standups" DynamoDB Table.                                                                        |
 | `standupsInvertedIndex`                 | The name of the "inverted index" of the standups DynamoDB Table.                                                 |
+| `workspacesTableArn`                    | The ARN of the "Workspaces" DynamoDB Table.                                                                      |
 | `recordingsBucketArn`                   | The ARN of the recordings S3 Bucket.                                                                             |
 | `transcodedRecordingsBucketArn`         | The ARN of the transcoded recordings S3 Bucket.                                                                  |
 | `newS3AudioRecordingTopicArn`           | The ARN of the SNS Topic that S3 sends a notification to when a new audio recording has been created.            |
