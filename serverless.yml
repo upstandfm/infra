@@ -141,11 +141,15 @@ resources:
         NotificationConfiguration:
           TopicConfigurations:
             - Event: s3:ObjectCreated:*
+              # For more info see:
+              # https://docs.aws.amazon.com/AmazonS3/latest/dev/NotificationHowTo.html
               Filter:
                 S3Key:
                   Rules:
                     - Name: prefix
                       Value: audio/
+                    - Name: suffix
+                      Value: .webm
               Topic: !Ref newS3AudioRecordingTopic
 
     transcodedRecordingsBucket:
