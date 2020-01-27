@@ -15,46 +15,9 @@ package:
   exclude:
     - ./*
 
-custom:
-  standupsInvertedIndex: "standups-inverted-index"
-
 resources:
   # CloudFormation template syntax
   Resources:
-    standupsTable:
-      # For more info see:
-      # https://docs.aws.amazon.com/en_pv/AWSCloudFormation/latest/UserGuide/aws-resource-dynamodb-table.html
-      Type: AWS::DynamoDB::Table
-      Properties:
-        TableName: standups
-        AttributeDefinitions:
-          - AttributeName: pk
-            AttributeType: S
-          - AttributeName: sk
-            AttributeType: S
-        KeySchema:
-          - AttributeName: pk
-            KeyType: HASH
-          - AttributeName: sk
-            KeyType: RANGE
-        ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
-        GlobalSecondaryIndexes:
-          - IndexName: ${self:custom.standupsInvertedIndex}
-            KeySchema:
-              - AttributeName: sk
-                KeyType: HASH
-              - AttributeName: pk
-                KeyType: RANGE
-            Projection:
-              ProjectionType: INCLUDE
-              NonKeyAttributes:
-                - standupId
-                - standupName
-            ProvisionedThroughput:
-              ReadCapacityUnits: 1
-              WriteCapacityUnits: 1
     workspacesTable:
       # For more info see:
       # https://docs.aws.amazon.com/en_pv/AWSCloudFormation/latest/UserGuide/aws-resource-dynamodb-table.html
@@ -191,9 +154,6 @@ resources:
 # For more info see:
 # https://serverless.com/framework/docs/dashboard/output-variables/
 outputs:
-  standupsTableArn:
-    "Fn::GetAtt": [standupsTable, Arn]
-  standupsInvertedIndex: ${self:custom.standupsInvertedIndex}
   workspacesTableArn:
     "Fn::GetAtt": [workspacesTable, Arn]
   recordingsBucketArn:
