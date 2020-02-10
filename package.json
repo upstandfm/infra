@@ -18,6 +18,6 @@
   "homepage": "https://github.com/upstandfm/infra#readme",
   "dependencies": {},
   "devDependencies": {
-    "serverless": "^1.52.0"
+    "serverless": "^1.63.0"
   }
 }
