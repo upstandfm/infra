@@ -67,6 +67,7 @@ The following [output variables](https://serverless.com/framework/docs/dashboard
 | `transcodedRecordingsBucketArn`         | The ARN of the transcoded recordings S3 Bucket.                                                                  |
 | `newS3AudioRecordingTopicArn`           | The ARN of the SNS Topic that S3 sends a notification to when a new audio recording has been created.            |
 | `newS3TranscodedAudioRecordingTopicArn` | The ARN of the SNS Topic that S3 sends a notification to when a new transcoded audio recording has been created. |
+| `userInvitesQueueArn`                   | The ARN of the SQS FIFO Queue that holds jobs to invite users.                                                   |
 
 An output variable can be used in a serverless manifest as follows:
 

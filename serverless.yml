@@ -149,6 +149,12 @@ resources:
                     - Name: prefix
                       Value: audio/
               Topic: !Ref newS3TranscodedAudioRecordingTopic
+    userInvitesQueue:
+      Type: AWS::SQS::Queue
+      Properties:
+        FifoQueue: true
+        ContentBasedDeduplication: true
+        QueueName: invite-users.fifo
 
 # Serverless output variables
 # For more info see:
@@ -163,3 +169,5 @@ outputs:
   # For a Topic "!Ref" will return the ARN
   newS3AudioRecordingTopicArn: !Ref newS3AudioRecordingTopic
   newS3TranscodedAudioRecordingTopicArn: !Ref newS3TranscodedAudioRecordingTopic
+  userInvitesQueueArn:
+    "Fn::GetAtt": [userInvitesQueue, Arn]
