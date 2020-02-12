@@ -154,7 +154,7 @@ resources:
       Properties:
         FifoQueue: true
         ContentBasedDeduplication: true
-        QueueName: invite-users.fifo
+        QueueName: user-invites.fifo
 
 # Serverless output variables
 # For more info see:
