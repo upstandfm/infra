@@ -56,6 +56,11 @@ resources:
       Properties:
         TopicName: new-s3-transcoded-audio-recording
 
+    newUserTopic:
+      Type: AWS::SNS::Topic
+      Properties:
+        TopicName: new-user
+
     # S3
     #
     # For more info on policies see:
@@ -179,6 +184,7 @@ outputs:
   # SNS
   newS3AudioRecordingTopicArn: !Ref newS3AudioRecordingTopic
   newS3TranscodedAudioRecordingTopicArn: !Ref newS3TranscodedAudioRecordingTopic
+  newUserTopicArn: !Ref newUserTopic
 
   # S3
   recordingsBucketArn:
