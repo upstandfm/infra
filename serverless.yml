@@ -61,6 +61,11 @@ resources:
       Properties:
         TopicName: new-user
 
+    deleteUserTopic:
+      Type: AWS::SNS::Topic
+      Properties:
+        TopicName: delete-user
+
     # S3
     #
     # For more info on policies see:
@@ -185,6 +190,7 @@ outputs:
   newS3AudioRecordingTopicArn: !Ref newS3AudioRecordingTopic
   newS3TranscodedAudioRecordingTopicArn: !Ref newS3TranscodedAudioRecordingTopic
   newUserTopicArn: !Ref newUserTopic
+  deleteUserTopicArn: !Ref deleteUserTopic
 
   # S3
   recordingsBucketArn:
