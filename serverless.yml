@@ -18,9 +18,12 @@ package:
 resources:
   # CloudFormation template syntax
   Resources:
+    # DynamoDB
+    #
+    # For more info see:
+    # https://docs.aws.amazon.com/en_pv/AWSCloudFormation/latest/UserGuide/aws-resource-dynamodb-table.html
+
     workspacesTable:
-      # For more info see:
-      # https://docs.aws.amazon.com/en_pv/AWSCloudFormation/latest/UserGuide/aws-resource-dynamodb-table.html
       Type: AWS::DynamoDB::Table
       Properties:
         TableName: Workspaces
@@ -38,23 +41,30 @@ resources:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
 
+    # SNS
+    #
+    # For more info see:
+    # https://docs.aws.amazon.com/en_pv/AWSCloudFormation/latest/UserGuide/aws-properties-sns-topic.html
+
     newS3AudioRecordingTopic:
-      # For more info see:
-      # https://docs.aws.amazon.com/en_pv/AWSCloudFormation/latest/UserGuide/aws-properties-sns-topic.html
       Type: AWS::SNS::Topic
       Properties:
         TopicName: new-s3-audio-recording
 
     newS3TranscodedAudioRecordingTopic:
-      # For more info see:
-      # https://docs.aws.amazon.com/en_pv/AWSCloudFormation/latest/UserGuide/aws-properties-sns-topic.html
       Type: AWS::SNS::Topic
       Properties:
         TopicName: new-s3-transcoded-audio-recording
 
+    # S3
+    #
+    # For more info on policies see:
+    # https://docs.aws.amazon.com/en_pv/AWSCloudFormation/latest/UserGuide/aws-properties-sns-policy.html
+    #
+    # For more info on buckets see:
+    # https://docs.aws.amazon.com/en_pv/AWSCloudFormation/latest/UserGuide/aws-properties-s3-bucket.html
+
     s3PublishTopicPolicy:
-      # For more info see:
-      # https://docs.aws.amazon.com/en_pv/AWSCloudFormation/latest/UserGuide/aws-properties-sns-policy.html
       Type: AWS::SNS::TopicPolicy
       Properties:
         Topics:
@@ -77,8 +87,6 @@ resources:
                 Service: s3.amazonaws.com
 
     recordingsBucket:
-      # For more info see:
-      # https://docs.aws.amazon.com/en_pv/AWSCloudFormation/latest/UserGuide/aws-properties-s3-bucket.html
       Type: AWS::S3::Bucket
       DependsOn: s3PublishTopicPolicy
       Properties:
@@ -116,8 +124,6 @@ resources:
               Topic: !Ref newS3AudioRecordingTopic
 
     transcodedRecordingsBucket:
-      # For more info see:
-      # https://docs.aws.amazon.com/en_pv/AWSCloudFormation/latest/UserGuide/aws-properties-s3-bucket.html
       Type: AWS::S3::Bucket
       DependsOn: s3PublishTopicPolicy
       Properties:
@@ -149,9 +155,13 @@ resources:
                     - Name: prefix
                       Value: audio/
               Topic: !Ref newS3TranscodedAudioRecordingTopic
+
+    # SQS
+    #
+    # For more info see:
+    # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-sqs-queues.html
+
     userInvitesQueue:
-      # For more info see:
-      # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-sqs-queues.html
       Type: AWS::SQS::Queue
       Properties:
         FifoQueue: true
@@ -162,15 +172,21 @@ resources:
 # For more info see:
 # https://serverless.com/framework/docs/dashboard/output-variables/
 outputs:
+  # DynamoDB
   workspacesTableArn:
     "Fn::GetAtt": [workspacesTable, Arn]
+
+  # SNS
+  newS3AudioRecordingTopicArn: !Ref newS3AudioRecordingTopic
+  newS3TranscodedAudioRecordingTopicArn: !Ref newS3TranscodedAudioRecordingTopic
+
+  # S3
   recordingsBucketArn:
     "Fn::GetAtt": [recordingsBucket, Arn]
   transcodedRecordingsBucketArn:
     "Fn::GetAtt": [transcodedRecordingsBucket, Arn]
-  # For a Topic "!Ref" will return the ARN
-  newS3AudioRecordingTopicArn: !Ref newS3AudioRecordingTopic
-  newS3TranscodedAudioRecordingTopicArn: !Ref newS3TranscodedAudioRecordingTopic
+
+  # SQS
   userInvitesQueueArn:
     "Fn::GetAtt": [userInvitesQueue, Arn]
   userInvitesQueueUrl: !Ref userInvitesQueue

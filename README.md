@@ -60,15 +60,32 @@ We also use a separate CloudFormation role to limit access during deployment, to
 
 The following [output variables](https://serverless.com/framework/docs/dashboard/output-variables/) are available in any service that uses the app `api`:
 
+## DynamoDB
+
+| Variable name        | Description                                 |
+| -------------------- | ------------------------------------------- |
+| `workspacesTableArn` | The ARN of the "Workspaces" DynamoDB Table. |
+
+## SNS
+
 | Variable name                           | Description                                                                                                      |
 | --------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
-| `workspacesTableArn`                    | The ARN of the "Workspaces" DynamoDB Table.                                                                      |
-| `recordingsBucketArn`                   | The ARN of the recordings S3 Bucket.                                                                             |
-| `transcodedRecordingsBucketArn`         | The ARN of the transcoded recordings S3 Bucket.                                                                  |
 | `newS3AudioRecordingTopicArn`           | The ARN of the SNS Topic that S3 sends a notification to when a new audio recording has been created.            |
 | `newS3TranscodedAudioRecordingTopicArn` | The ARN of the SNS Topic that S3 sends a notification to when a new transcoded audio recording has been created. |
-| `userInvitesQueueArn`                   | The ARN of the SQS FIFO Queue that holds jobs to invite users.                                                   |
-| `userInvitesQueueUrl`                   | The Queue URL of the SQS FIFO Queue that holds jobs to invite users.                                             |
+
+## S3
+
+| Variable name                   | Description                                     |
+| ------------------------------- | ----------------------------------------------- |
+| `recordingsBucketArn`           | The ARN of the recordings S3 Bucket.            |
+| `transcodedRecordingsBucketArn` | The ARN of the transcoded recordings S3 Bucket. |
+
+## SQS
+
+| Variable name         | Description                                                          |
+| --------------------- | -------------------------------------------------------------------- |
+| `userInvitesQueueArn` | The ARN of the SQS FIFO Queue that holds jobs to invite users.       |
+| `userInvitesQueueUrl` | The Queue URL of the SQS FIFO Queue that holds jobs to invite users. |
 
 An output variable can be used in a serverless manifest as follows:
 
