@@ -150,6 +150,8 @@ resources:
                       Value: audio/
               Topic: !Ref newS3TranscodedAudioRecordingTopic
     userInvitesQueue:
+      # For more info see:
+      # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-sqs-queues.html
       Type: AWS::SQS::Queue
       Properties:
         FifoQueue: true
@@ -171,3 +173,4 @@ outputs:
   newS3TranscodedAudioRecordingTopicArn: !Ref newS3TranscodedAudioRecordingTopic
   userInvitesQueueArn:
     "Fn::GetAtt": [userInvitesQueue, Arn]
+  userInvitesQueueUrl: !Ref userInvitesQueue
