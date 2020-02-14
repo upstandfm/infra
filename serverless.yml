@@ -56,15 +56,15 @@ resources:
       Properties:
         TopicName: new-s3-transcoded-audio-recording
 
-    newUserTopic:
+    newInviteTopic:
       Type: AWS::SNS::Topic
       Properties:
-        TopicName: new-user
+        TopicName: new-invite
 
-    deleteUserTopic:
+    deletedInviteTopic:
       Type: AWS::SNS::Topic
       Properties:
-        TopicName: delete-user
+        TopicName: deleted-invite
 
     # S3
     #
@@ -189,8 +189,8 @@ outputs:
   # SNS
   newS3AudioRecordingTopicArn: !Ref newS3AudioRecordingTopic
   newS3TranscodedAudioRecordingTopicArn: !Ref newS3TranscodedAudioRecordingTopic
-  newUserTopicArn: !Ref newUserTopic
-  deleteUserTopicArn: !Ref deleteUserTopic
+  newInviteTopicArn: !Ref newInviteTopic
+  deleteInviteTopicArn: !Ref deletedInviteTopic
 
   # S3
   recordingsBucketArn:
