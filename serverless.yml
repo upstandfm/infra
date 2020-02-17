@@ -41,6 +41,24 @@ resources:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
 
+    invitesTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: Invites
+        AttributeDefinitions:
+          - AttributeName: pk
+            AttributeType: S
+          - AttributeName: sk
+            AttributeType: S
+        KeySchema:
+          - AttributeName: pk
+            KeyType: HASH
+          - AttributeName: sk
+            KeyType: RANGE
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+
     # SNS
     #
     # For more info see:
@@ -185,6 +203,8 @@ outputs:
   # DynamoDB
   workspacesTableArn:
     "Fn::GetAtt": [workspacesTable, Arn]
+  invitesTableArn:
+    "Fn::GetAtt": [invitesTable, Arn]
 
   # SNS
   newS3AudioRecordingTopicArn: !Ref newS3AudioRecordingTopic
