@@ -58,6 +58,8 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
+        StreamSpecification:
+          StreamViewType: NEW_IMAGE
 
     # SNS
     #
@@ -205,6 +207,8 @@ outputs:
     "Fn::GetAtt": [workspacesTable, Arn]
   invitesTableArn:
     "Fn::GetAtt": [invitesTable, Arn]
+  invitesTableStreamArn:
+    "Fn::GetAtt": [invitesTable, StreamArn]
 
   # SNS
   newS3AudioRecordingTopicArn: !Ref newS3AudioRecordingTopic

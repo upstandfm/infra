@@ -62,10 +62,11 @@ The following [output variables](https://serverless.com/framework/docs/dashboard
 
 ## DynamoDB
 
-| Variable name        | Description                                 |
-| -------------------- | ------------------------------------------- |
-| `workspacesTableArn` | The ARN of the "Workspaces" DynamoDB Table. |
-| `invitesTableArn`    | The ARN of the "Invites" DynamoDB Table.    |
+| Variable name           | Description                                            |
+| ----------------------- | ------------------------------------------------------ |
+| `workspacesTableArn`    | The ARN of the "Workspaces" DynamoDB Table.            |
+| `invitesTableArn`       | The ARN of the "Invites" DynamoDB Table.               |
+| `invitesTableStreamArn` | The ARN of the Stream of the "Invites" DynamoDB Table. |
 
 ## SNS
 
