@@ -186,18 +186,6 @@ resources:
                       Value: audio/
               Topic: !Ref newS3TranscodedAudioRecordingTopic
 
-    # SQS
-    #
-    # For more info see:
-    # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-sqs-queues.html
-
-    userInvitesQueue:
-      Type: AWS::SQS::Queue
-      Properties:
-        FifoQueue: true
-        ContentBasedDeduplication: true
-        QueueName: user-invites.fifo
-
 # Serverless output variables
 # For more info see:
 # https://serverless.com/framework/docs/dashboard/output-variables/
@@ -221,8 +209,3 @@ outputs:
     "Fn::GetAtt": [recordingsBucket, Arn]
   transcodedRecordingsBucketArn:
     "Fn::GetAtt": [transcodedRecordingsBucket, Arn]
-
-  # SQS
-  userInvitesQueueArn:
-    "Fn::GetAtt": [userInvitesQueue, Arn]
-  userInvitesQueueUrl: !Ref userInvitesQueue

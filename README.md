@@ -84,13 +84,6 @@ The following [output variables](https://serverless.com/framework/docs/dashboard
 | `recordingsBucketArn`           | The ARN of the recordings S3 Bucket.            |
 | `transcodedRecordingsBucketArn` | The ARN of the transcoded recordings S3 Bucket. |
 
-## SQS
-
-| Variable name         | Description                                                          |
-| --------------------- | -------------------------------------------------------------------- |
-| `userInvitesQueueArn` | The ARN of the SQS FIFO Queue that holds jobs to invite users.       |
-| `userInvitesQueueUrl` | The Queue URL of the SQS FIFO Queue that holds jobs to invite users. |
-
 An output variable can be used in a serverless manifest as follows:
 
 ```
